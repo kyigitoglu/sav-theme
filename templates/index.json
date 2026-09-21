@@ -169,7 +169,7 @@
       "settings": {
         "heading": "Sell Your Watch",
         "intro": "",
-        "api_base": "",
+        "api_base": "https://enquiry-abc.vercel.app",
         "success_message": "Thank you — we'll be in touch shortly."
       }
     }
