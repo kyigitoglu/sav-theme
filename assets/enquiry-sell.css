@@ -1,0 +1,89 @@
+.enquiry-sell { padding: 4rem 0; }
+.enquiry-sell__inner { max-width: 640px; margin: 0 auto; }
+.enquiry-sell__heading { font-size: 1.75rem; margin-bottom: 0.5rem; }
+.enquiry-sell__intro { color: #666; margin-bottom: 2.5rem; }
+
+.enquiry-form__fieldset { border: none; padding: 0; margin: 0 0 2rem; }
+.enquiry-form__legend {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.enquiry-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .enquiry-form__row { grid-template-columns: 1fr; } }
+
+.enquiry-form__field { margin-bottom: 1rem; }
+.enquiry-form__label { display: block; font-size: 0.8125rem; margin-bottom: 0.375rem; color: #444; }
+.enquiry-form__label span { color: #999; }
+
+.enquiry-form__input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 0;
+  font-size: 0.9375rem;
+  color: #111;
+  background: #fff;
+  appearance: none;
+  outline: none;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+.enquiry-form__input:focus { border-color: #111; }
+.enquiry-form__textarea { resize: vertical; }
+.enquiry-form__select { cursor: pointer; }
+
+.enquiry-form__checkboxes { display: flex; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.enquiry-form__checkbox-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer; }
+.enquiry-form__checkbox-label input { width: 1rem; height: 1rem; accent-color: #111; cursor: pointer; }
+
+.enquiry-form__hint { font-size: 0.8125rem; color: #777; margin-bottom: 0.75rem; }
+
+.enquiry-form__dropzone {
+  border: 1px dashed #ccc;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  margin-bottom: 0.75rem;
+}
+.enquiry-form__dropzone:hover,
+.enquiry-form__dropzone.is-active { border-color: #111; background: #fafafa; }
+.enquiry-form__dropzone-text { font-size: 0.875rem; color: #777; margin: 0; pointer-events: none; }
+.enquiry-form__dropzone-text span { text-decoration: underline; color: #111; }
+.enquiry-form__file-input { display: none; }
+
+.enquiry-form__file-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+.enquiry-form__file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.enquiry-form__file-item[data-status="done"] .enquiry-form__file-status { color: #2a7a2a; }
+.enquiry-form__file-item[data-status="error"] .enquiry-form__file-status { color: #c00; }
+.enquiry-form__file-remove {
+  background: none; border: none; cursor: pointer;
+  color: #bbb; font-size: 1.1rem; line-height: 1; padding: 0 0.25rem;
+}
+.enquiry-form__file-remove:hover { color: #c00; }
+
+.enquiry-form__error { display: block; font-size: 0.8125rem; color: #c00; margin-top: 0.25rem; }
+.enquiry-form__error--global { margin-bottom: 1rem; font-size: 0.875rem; }
+
+.enquiry-form__submit { width: 100%; margin-top: 0.5rem; }
+
+.enquiry-sell__success {
+  padding: 2rem;
+  background: #f7f7f7;
+  text-align: center;
+  font-size: 1rem;
+}

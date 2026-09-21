@@ -1,0 +1,325 @@
+{{ 'enquiry-sell.css' | asset_url | stylesheet_tag }}
+
+<div class="enquiry-sell page-width" id="enquiry-sell">
+  <div class="enquiry-sell__inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="enquiry-sell__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <p class="enquiry-sell__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    <form id="sell-form" class="enquiry-form" novalidate>
+
+      <fieldset class="enquiry-form__fieldset">
+        <legend class="enquiry-form__legend">Your Details</legend>
+
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-name">Name <span aria-hidden="true">*</span></label>
+          <input class="enquiry-form__input" type="text" id="sell-name" name="name" required autocomplete="name">
+          <span class="enquiry-form__error" data-error="name"></span>
+        </div>
+
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-email">Email <span aria-hidden="true">*</span></label>
+          <input class="enquiry-form__input" type="email" id="sell-email" name="email" required autocomplete="email">
+          <span class="enquiry-form__error" data-error="email"></span>
+        </div>
+
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-phone">Phone</label>
+          <input class="enquiry-form__input" type="tel" id="sell-phone" name="phone" autocomplete="tel">
+        </div>
+      </fieldset>
+
+      <fieldset class="enquiry-form__fieldset">
+        <legend class="enquiry-form__legend">The Watch</legend>
+
+        <div class="enquiry-form__row">
+          <div class="enquiry-form__field">
+            <label class="enquiry-form__label" for="sell-brand">Brand <span aria-hidden="true">*</span></label>
+            <input class="enquiry-form__input" type="text" id="sell-brand" name="brand" required placeholder="e.g. Rolex">
+            <span class="enquiry-form__error" data-error="brand"></span>
+          </div>
+          <div class="enquiry-form__field">
+            <label class="enquiry-form__label" for="sell-model">Model <span aria-hidden="true">*</span></label>
+            <input class="enquiry-form__input" type="text" id="sell-model" name="model" required placeholder="e.g. Submariner">
+            <span class="enquiry-form__error" data-error="model"></span>
+          </div>
+        </div>
+
+        <div class="enquiry-form__row">
+          <div class="enquiry-form__field">
+            <label class="enquiry-form__label" for="sell-reference">Reference</label>
+            <input class="enquiry-form__input" type="text" id="sell-reference" name="reference" placeholder="e.g. 126610LN">
+          </div>
+          <div class="enquiry-form__field">
+            <label class="enquiry-form__label" for="sell-year">Year (approx.)</label>
+            <input class="enquiry-form__input" type="text" id="sell-year" name="year" placeholder="e.g. 2021">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="enquiry-form__fieldset">
+        <legend class="enquiry-form__legend">Condition &amp; Documentation</legend>
+
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-condition">Condition <span aria-hidden="true">*</span></label>
+          <select class="enquiry-form__input enquiry-form__select" id="sell-condition" name="condition" required>
+            <option value="excellent">Excellent</option>
+            <option value="good" selected>Good</option>
+            <option value="fair">Fair</option>
+            <option value="poor">Poor</option>
+          </select>
+        </div>
+
+        <div class="enquiry-form__checkboxes">
+          <label class="enquiry-form__checkbox-label">
+            <input type="checkbox" name="has_box" id="sell-box">
+            <span>Original box</span>
+          </label>
+          <label class="enquiry-form__checkbox-label">
+            <input type="checkbox" name="has_papers" id="sell-papers">
+            <span>Papers / warranty card</span>
+          </label>
+        </div>
+
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-price">Asking price</label>
+          <input class="enquiry-form__input" type="text" id="sell-price" name="asking_price" placeholder="e.g. £15,000">
+        </div>
+      </fieldset>
+
+      <fieldset class="enquiry-form__fieldset">
+        <legend class="enquiry-form__legend">Images</legend>
+        <p class="enquiry-form__hint">
+          Dial, case, caseback, bracelet and any documentation. Up to 8 images, 10MB each.
+        </p>
+
+        <div class="enquiry-form__dropzone" id="sell-dropzone" role="button" tabindex="0" aria-label="Upload images">
+          <input type="file" id="sell-files" name="files" accept="image/*" multiple class="enquiry-form__file-input">
+          <p class="enquiry-form__dropzone-text">Drag images here, or <span>click to select</span></p>
+        </div>
+
+        <ul class="enquiry-form__file-list" id="sell-file-list" hidden></ul>
+      </fieldset>
+
+      <fieldset class="enquiry-form__fieldset">
+        <div class="enquiry-form__field">
+          <label class="enquiry-form__label" for="sell-message">Anything else</label>
+          <textarea class="enquiry-form__input enquiry-form__textarea" id="sell-message" name="message" rows="4"></textarea>
+        </div>
+      </fieldset>
+
+      <p class="enquiry-form__error enquiry-form__error--global" id="sell-error" hidden></p>
+
+      <button type="submit" class="enquiry-form__submit button button--primary" id="sell-submit">
+        <span class="enquiry-form__submit-label">Submit Enquiry</span>
+        <span class="enquiry-form__submit-loading" hidden>Sending…</span>
+      </button>
+
+    </form>
+
+    <div class="enquiry-sell__success" id="sell-success" hidden>
+      <p>{{ section.settings.success_message | default: 'Thank you — we\'ll be in touch shortly.' }}</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var API_BASE = {{ section.settings.api_base | json }};
+  var MAX_FILES = 8;
+  var files = [];
+
+  var form = document.getElementById('sell-form');
+  var dropzone = document.getElementById('sell-dropzone');
+  var fileInput = document.getElementById('sell-files');
+  var fileList = document.getElementById('sell-file-list');
+  var submitBtn = document.getElementById('sell-submit');
+  var errorGlobal = document.getElementById('sell-error');
+  var successEl = document.getElementById('sell-success');
+
+  // Dropzone
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+
+  dropzone.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    dropzone.classList.add('is-active');
+  });
+  dropzone.addEventListener('dragleave', function () {
+    dropzone.classList.remove('is-active');
+  });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dropzone.classList.remove('is-active');
+    addFiles(Array.from(e.dataTransfer.files));
+  });
+
+  fileInput.addEventListener('change', function () {
+    addFiles(Array.from(fileInput.files));
+    fileInput.value = '';
+  });
+
+  function addFiles(newFiles) {
+    newFiles.forEach(function (f) {
+      if (files.length >= MAX_FILES) return;
+      if (!f.type.startsWith('image/')) return;
+      files.push({ file: f, status: 'pending' });
+    });
+    renderFileList();
+  }
+
+  function renderFileList() {
+    if (files.length === 0) { fileList.hidden = true; return; }
+    fileList.hidden = false;
+    fileList.innerHTML = files.map(function (u, i) {
+      return '<li class="enquiry-form__file-item" data-status="' + u.status + '">' +
+        '<span class="enquiry-form__file-name">' + u.file.name + '</span>' +
+        (u.status === 'pending'
+          ? '<button type="button" class="enquiry-form__file-remove" data-index="' + i + '" aria-label="Remove">&times;</button>'
+          : '<span class="enquiry-form__file-status">' + (u.status === 'done' ? '✓' : u.status === 'uploading' ? '…' : '✗') + '</span>') +
+        '</li>';
+    }).join('');
+
+    fileList.querySelectorAll('[data-index]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        files.splice(parseInt(btn.dataset.index), 1);
+        renderFileList();
+      });
+    });
+  }
+
+  async function uploadFiles() {
+    if (files.length === 0) return [];
+    var formData = new FormData();
+    files.forEach(function (u) { formData.append('files', u.file); });
+    files.forEach(function (u) { u.status = 'uploading'; });
+    renderFileList();
+
+    var res = await fetch(API_BASE + '/api/upload', { method: 'POST', body: formData });
+    if (!res.ok) throw new Error('Image upload failed');
+    var data = await res.json();
+    files.forEach(function (u) { u.status = 'done'; });
+    renderFileList();
+    return data.paths;
+  }
+
+  function getField(name) {
+    return form.querySelector('[name="' + name + '"]');
+  }
+
+  function clearErrors() {
+    form.querySelectorAll('[data-error]').forEach(function (el) { el.textContent = ''; });
+    errorGlobal.hidden = true;
+  }
+
+  function showError(field, msg) {
+    var el = form.querySelector('[data-error="' + field + '"]');
+    if (el) el.textContent = msg;
+  }
+
+  function validate() {
+    var ok = true;
+    if (!getField('name').value.trim()) { showError('name', 'Name required'); ok = false; }
+    if (!getField('email').value.trim()) { showError('email', 'Email required'); ok = false; }
+    if (!getField('brand').value.trim()) { showError('brand', 'Brand required'); ok = false; }
+    if (!getField('model').value.trim()) { showError('model', 'Model required'); ok = false; }
+    return ok;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearErrors();
+    if (!validate()) return;
+
+    submitBtn.querySelector('.enquiry-form__submit-label').hidden = true;
+    submitBtn.querySelector('.enquiry-form__submit-loading').hidden = false;
+    submitBtn.disabled = true;
+
+    try {
+      var imagePaths = await uploadFiles();
+
+      var payload = {
+        name: getField('name').value.trim(),
+        email: getField('email').value.trim(),
+        phone: getField('phone').value.trim(),
+        brand: getField('brand').value.trim(),
+        model: getField('model').value.trim(),
+        reference: getField('reference').value.trim(),
+        year: getField('year').value.trim(),
+        condition: getField('condition').value,
+        has_box: getField('has_box').checked,
+        has_papers: getField('has_papers').checked,
+        asking_price: getField('asking_price').value.trim(),
+        message: getField('message').value.trim(),
+        image_paths: imagePaths,
+        source_url: window.location.href
+      };
+
+      var res = await fetch(API_BASE + '/api/enquiry/sell', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        var body = await res.json().catch(function () { return {}; });
+        throw new Error(body.error || 'Submission failed');
+      }
+
+      form.hidden = true;
+      successEl.hidden = false;
+
+    } catch (err) {
+      errorGlobal.textContent = err.message || 'Something went wrong. Please try again.';
+      errorGlobal.hidden = false;
+      submitBtn.querySelector('.enquiry-form__submit-label').hidden = false;
+      submitBtn.querySelector('.enquiry-form__submit-loading').hidden = true;
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Sell Enquiry Form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sell Your Watch"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction text"
+    },
+    {
+      "type": "text",
+      "id": "api_base",
+      "label": "API Base URL",
+      "info": "Your Vercel app URL, e.g. https://enquiry-abc.vercel.app"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you — we'll be in touch shortly."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sell Enquiry Form"
+    }
+  ]
+}
+{% endschema %}
