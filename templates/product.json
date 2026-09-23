@@ -38,8 +38,19 @@
           "type": "price",
           "settings": {}
         },
+        "enquiry_buy_LdYEpn": {
+          "type": "enquiry_buy",
+          "settings": {
+            "button_label": "Make an Enquiry",
+            "drawer_title": "Reserve This Watch",
+            "submit_label": "Send Enquiry",
+            "api_base": "https://enquiry-savard.vercel.app",
+            "success_message": "Thank you — we'll be in touch shortly."
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": false
@@ -63,6 +74,7 @@
         "variant_picker",
         "quantity_selector",
         "price",
+        "enquiry_buy_LdYEpn",
         "buy_buttons",
         "description",
         "share"
