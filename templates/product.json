@@ -44,7 +44,7 @@
             "button_label": "Make an Enquiry",
             "drawer_title": "Reserve This Watch",
             "submit_label": "Send Enquiry",
-            "api_base": "https://enquiry-savard.vercel.app",
+            "api_base": "https://enquiry-xi.vercel.app",
             "success_message": "Thank you — we'll be in touch shortly."
           }
         },
