@@ -13,6 +13,7 @@
   >
     {{ block.settings.button_label | default: 'Make an Enquiry' }}
   </button>
+  <p id="enquiry-buy-count" style="margin-top:0.5rem;font-size:0.8125rem;color:#888;text-align:center;min-height:1.2em;"></p>
 </div>
 
 <div class="enquiry-buy-overlay" id="enquiry-buy-overlay" aria-hidden="true"></div>
@@ -138,6 +139,19 @@
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     openBtn.focus();
+  }
+
+  // Enquiry count
+  var countEl = document.getElementById('enquiry-buy-count');
+  if (countEl) {
+    fetch(API_BASE + '/api/product-enquiries?handle={{ watch_handle | escape }}')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.count > 0) {
+          countEl.textContent = d.count + ' ' + (d.count === 1 ? 'person has' : 'people have') + ' enquired about this watch';
+        }
+      })
+      .catch(function () {});
   }
 
   openBtn.addEventListener('click', openDrawer);
