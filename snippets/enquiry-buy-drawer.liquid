@@ -49,6 +49,7 @@
       <input type="hidden" name="watch_reference" value="{{ watch_reference | escape }}">
       <input type="hidden" name="watch_handle" value="{{ watch_handle | escape }}">
       <input type="hidden" name="product_id" value="{{ product_id | escape }}">
+      <input type="hidden" name="product_image_url" value="{{ product.featured_image | image_url: width: 800 }}">
 
       <div class="enquiry-buy-form__field">
         <label class="enquiry-buy-form__label" for="buy-name">
@@ -169,15 +170,16 @@
 
     try {
       var payload = {
-        name:            getField('name').value.trim(),
-        email:           getField('email').value.trim(),
-        phone:           getField('phone').value.trim(),
-        message:         getField('message').value.trim(),
-        watch_title:     getField('watch_title').value,
-        watch_reference: getField('watch_reference').value,
-        watch_handle:    getField('watch_handle').value,
-        product_id:      getField('product_id').value,
-        source_url:      window.location.href
+        name:              getField('name').value.trim(),
+        email:             getField('email').value.trim(),
+        phone:             getField('phone').value.trim(),
+        message:           getField('message').value.trim(),
+        watch_title:       getField('watch_title').value,
+        watch_reference:   getField('watch_reference').value,
+        watch_handle:      getField('watch_handle').value,
+        product_id:        getField('product_id').value,
+        product_image_url: getField('product_image_url').value,
+        source_url:        window.location.href
       };
 
       var res = await fetch(API_BASE + '/api/enquiry/buy', {
