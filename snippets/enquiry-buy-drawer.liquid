@@ -36,10 +36,23 @@
   </div>
 
   <div class="enquiry-buy-drawer__product">
-    <p class="enquiry-buy-drawer__product-title">{{ watch_title }}</p>
-    {%- if watch_reference != '' -%}
-      <p class="enquiry-buy-drawer__product-ref">Ref. {{ watch_reference }}</p>
+    {%- if product.featured_image -%}
+      <img
+        class="enquiry-buy-drawer__product-img"
+        src="https:{{ product.featured_image | image_url: width: 120 }}"
+        alt="{{ watch_title | escape }}"
+        width="56"
+        height="56"
+      >
+    {%- else -%}
+      <div class="enquiry-buy-drawer__product-img-placeholder"></div>
     {%- endif -%}
+    <div class="enquiry-buy-drawer__product-info">
+      <p class="enquiry-buy-drawer__product-title">{{ watch_title }}</p>
+      {%- if watch_reference != '' -%}
+        <p class="enquiry-buy-drawer__product-ref">Ref. {{ watch_reference }}</p>
+      {%- endif -%}
+    </div>
   </div>
 
   <div class="enquiry-buy-drawer__body" id="enquiry-buy-body">
