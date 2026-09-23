@@ -314,6 +314,8 @@
               {%- render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true -%}
             {%- when 'enquiry_buy' -%}
               {%- render 'enquiry-buy-drawer', product: product, block: block -%}
+            {%- when 'enquiry_count' -%}
+              {%- render 'enquiry-count', product: product, block: block -%}
             {%- when 'rating' -%}
               {%- if product.metafields.reviews.rating.value != blank -%}
                 {% liquid
@@ -741,6 +743,19 @@
           "default": false,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        }
+      ]
+    },
+    {
+      "type": "enquiry_count",
+      "name": "Enquiry Count",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "api_base",
+          "label": "API Base URL",
+          "info": "Your Vercel app URL, e.g. https://enquiry.vercel.app"
         }
       ]
     },

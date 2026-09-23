@@ -1,0 +1,16 @@
+<p id="enquiry-count-{{ product.handle }}" style="font-size:0.8125rem;color:#888;margin:0;min-height:1.2em;"></p>
+
+<script>
+(function () {
+  var el = document.getElementById('enquiry-count-{{ product.handle }}');
+  if (!el) return;
+  fetch({{ block.settings.api_base | json }} + '/api/product-enquiries?handle={{ product.handle | escape }}')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d.count > 0) {
+        el.textContent = d.count + ' ' + (d.count === 1 ? 'person has' : 'people have') + ' enquired about this watch';
+      }
+    })
+    .catch(function () {});
+})();
+</script>
