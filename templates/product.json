@@ -26,7 +26,7 @@
         "enquiry_count_HdxjED": {
           "type": "enquiry_count",
           "settings": {
-            "api_base": "https://enquiry-xi.vercel.app/api/product-enquiries?handle=lange-sohne-zeitwerk-honeygold-lumen-luxury-mechanical-watch"
+            "api_base": "https://enquiry-xi.vercel.app"
           }
         },
         "variant_picker": {
